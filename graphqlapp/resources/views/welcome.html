@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Welcome</title>
+</head>
+<body>
+<h2>Welcome {{ APP_NAME }}</h2>
+<p>mode: {{ APP_MODE }}</p>
+<p>route path: {% route 'welcome' %}</p>
+<p>url: {{ APP_URL }}{{ route_path }}</p>
+<p>static path: {% static 'js/a.js' %}</p>
+<p>{{ time }}</p>
+</body>
+</html>

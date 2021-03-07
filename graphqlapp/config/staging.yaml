@@ -1,0 +1,11 @@
+APP:
+  MODE: staging
+
+DB:
+  DEFAULT:
+    CONNECTION: mysql
+    HOST: 127.0.0.1
+    PORT: 3306
+    DATABASE: graphql_staging
+    USERNAME: root
+    PASSWORD: a12345678

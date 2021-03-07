@@ -1,0 +1,11 @@
+APP:
+  MODE: test
+
+DB:
+  DEFAULT:
+    CONNECTION: mysql
+    HOST: 127.0.0.1
+    PORT: 3306
+    DATABASE: graphql_test
+    USERNAME: root
+    PASSWORD: a12345678
