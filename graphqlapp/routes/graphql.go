@@ -15,11 +15,10 @@ const (
   graphUIPath = "/graphql-ui"
 )
 
-func registerGraphql(router *core.Application) {
+func NewGraphqlHandler() *handler.Server {
   us := services.NewUserServices()
 
-  playgroundHandler := playground.Handler("GraphQL playground", graphqlPath)
-  graphqlHandler := handler.NewDefaultServer(
+  return handler.NewDefaultServer(
     generated.NewExecutableSchema(
       generated.Config{
         Resolvers: &resolvers.Resolver{
@@ -29,6 +28,11 @@ func registerGraphql(router *core.Application) {
       },
     ),
   )
+}
+
+func registerGraphql(router *core.Application) {
+  playgroundHandler := playground.Handler("GraphQL playground", graphqlPath)
+  graphqlHandler := NewGraphqlHandler()
 
   if core.GetConfig().IsDev() {
     router.RegisterHandler(router.GET, graphUIPath, func(c *context.AppContext) error {

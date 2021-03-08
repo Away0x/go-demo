@@ -31,6 +31,9 @@ gqlgen:
 test-controller:
 	env GRAPHQLAPP_APP_MODE=test go test -v ./tests/controllers/...
 
+test-graphql:
+	env GRAPHQLAPP_APP_MODE=test go test -v ./tests/graphql/...
+
 test-model:
 	env GRAPHQLAPP_APP_MODE=test go test -v ./tests/models/...
 
@@ -41,6 +44,7 @@ test:
 	make test-model;
 	make test-service;
 	make test-controller
+	make test-graphql
 
 clean:
 	if [ -f ${APP_NAME} ]; then rm ${APP_NAME}; fi
@@ -55,6 +59,7 @@ help:
 	@echo "make gqlgen - generate graphql files"
 	@echo "make test - test all"
 	@echo "make test-controller - test controller"
+	@echo "make test-graphql - test graphql"
 	@echo "make test-model - test model"
 	@echo "make test-service - test service"
 	@echo "make doc - generate swagger api docs"
