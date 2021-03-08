@@ -4,7 +4,12 @@ type User {
   email: String!
 }
 
-input NewUser {
+input CreateUser {
   name: String!
   email: String!
+}
+
+input UpdateUser {
+  name: String
+  email: String
 }

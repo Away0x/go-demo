@@ -18,10 +18,16 @@ func Register(router *core.Application) {
   }
 
   if core.GetConfig().IsDev() {
+    logWhiteList := [...]string{staticURL, faviconURl, graphqlPath, graphUIPath}
     router.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
       Format: "${status}   ${method}   ${latency_human}               ${uri}\n",
       Skipper: func(c echo.Context) bool {
-        return strings.HasPrefix(c.Request().URL.Path, staticURL) || strings.HasPrefix(c.Request().URL.Path, faviconURl)
+        for _, p := range logWhiteList {
+          if strings.HasPrefix(c.Request().URL.Path, p) {
+            return true
+          }
+        }
+        return false
       },
     }))
   }

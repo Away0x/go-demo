@@ -5,25 +5,41 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 	"graphqlapp/app/graph/generated"
 	gqlmodels "graphqlapp/app/graph/models"
 	"graphqlapp/app/models"
 )
 
-func (r *mutationResolver) CreateUser(ctx context.Context, input *gqlmodels.NewUser) (*models.User, error) {
-	return r.UserServices.Create(&models.User{
-	  Name: input.Name,
-	  Email: input.Email,
-  })
+func (r *mutationResolver) CreateUser(ctx context.Context, input *gqlmodels.CreateUser) (*models.User, error) {
+	u := &models.User{
+		Name:  input.Name,
+		Email: input.Email,
+	}
+	err := models.CreateModel(u)
+	return u, err
+}
+
+func (r *mutationResolver) UpdateUser(ctx context.Context, id *int, input *gqlmodels.UpdateUser) (*models.User, error) {
+	u := new(models.User)
+	err := models.DB().First(u, id).Error
+	if err != nil {
+		return nil, err
+	}
+
+	if input.Name != nil {
+		u.Name = *input.Name
+	}
+	if input.Email != nil {
+		u.Email = *input.Email
+	}
+	err = models.UpdateModel(u)
+	return u, err
 }
 
 func (r *queryResolver) User(ctx context.Context, id *int) (*models.User, error) {
-	if id != nil {
-	  return r.UserServices.Detail(*id)
-  }
-
-  return nil, fmt.Errorf("self user")
+	u := new(models.User)
+	err := models.DB().First(u, id).Error
+	return u, err
 }
 
 func (r *queryResolver) Users(ctx context.Context) ([]*models.User, error) {

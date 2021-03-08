@@ -29,6 +29,7 @@ func registerGraphql(router *core.Application) {
       },
     ),
   )
+
   if core.GetConfig().IsDev() {
     router.RegisterHandler(router.GET, graphUIPath, func(c *context.AppContext) error {
       playgroundHandler.ServeHTTP(c.Response(), c.Request())
