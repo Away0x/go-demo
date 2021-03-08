@@ -1,5 +1,5 @@
 schema:
-  - app/graph/*.graphqls
+  - app/graph/*.graphql
 
 exec:
   filename: app/graph/generated/generated.go
@@ -13,7 +13,6 @@ resolver:
   layout: follow-schema
   dir: app/graph/resolvers
   package: resolvers
-  filename_template: "{name}.resolvers.go"
 
 autobind:
   - "graphqlapp/app/graph/models"

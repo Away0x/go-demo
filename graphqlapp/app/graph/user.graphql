@@ -4,6 +4,11 @@ type User {
   email: String!
 }
 
+type UserList {
+  items: [User!]!
+  pageInfo: PageResult!
+}
+
 input CreateUser {
   name: String!
   email: String!

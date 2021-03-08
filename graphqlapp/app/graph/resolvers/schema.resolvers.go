@@ -26,12 +26,8 @@ func (r *mutationResolver) UpdateUser(ctx context.Context, id *int, input *gqlmo
 		return nil, err
 	}
 
-	if input.Name != nil {
-		u.Name = *input.Name
-	}
-	if input.Email != nil {
-		u.Email = *input.Email
-	}
+	u.Name = *input.Name
+	u.Email = *input.Email
 	err = models.UpdateModel(u)
 	return u, err
 }
@@ -42,8 +38,16 @@ func (r *queryResolver) User(ctx context.Context, id *int) (*models.User, error)
 	return u, err
 }
 
-func (r *queryResolver) Users(ctx context.Context) ([]*models.User, error) {
-	return r.UserServices.List()
+func (r *queryResolver) Users(ctx context.Context, page *int, perPage *int) (*gqlmodels.UserList, error) {
+	items, total, err := r.UserServices.List(*page, *perPage)
+	if err != nil {
+		return nil, err
+	}
+
+	return &gqlmodels.UserList{
+		Items:    items,
+		PageInfo: &gqlmodels.PageResult{Total: int(total), Page: *page, PerPage: *perPage},
+	}, nil
 }
 
 // Mutation returns generated.MutationResolver implementation.

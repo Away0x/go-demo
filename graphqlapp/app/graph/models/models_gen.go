@@ -2,12 +2,32 @@
 
 package gqlmodels
 
+import (
+	"graphqlapp/app/models"
+)
+
 type CreateUser struct {
 	Name  string `json:"name"`
 	Email string `json:"email"`
 }
 
+type PageParams struct {
+	Page    int `json:"page"`
+	PerPage int `json:"perPage"`
+}
+
+type PageResult struct {
+	Page    int `json:"page"`
+	PerPage int `json:"perPage"`
+	Total   int `json:"total"`
+}
+
 type UpdateUser struct {
 	Name  *string `json:"name"`
 	Email *string `json:"email"`
+}
+
+type UserList struct {
+	Items    []*models.User `json:"items"`
+	PageInfo *PageResult    `json:"pageInfo"`
 }

@@ -1,9 +1,0 @@
-type Query {
-  user(id: Int): User!
-  users: [User!]!
-}
-
-type Mutation {
-  createUser(input: CreateUser): User!
-  updateUser(id: Int, input: UpdateUser): User!
-}
