@@ -1,4 +1,4 @@
-APP_NAME = "goweibo"
+APP_NAME = "graphqlapp"
 PROXY = "https://goproxy.cn"
 
 default:
@@ -25,6 +25,9 @@ api-doc:
 mock:
 	env GRAPHQLAPP_APP_MODE=development go run main.go mock
 
+gqlgen:
+	gqlgen generate
+
 test-controller:
 	env GRAPHQLAPP_APP_MODE=test go test -v ./tests/controllers/...
 
@@ -49,6 +52,7 @@ help:
 	@echo "make dev - run go fresh"
 	@echo "make deploy - deploy app"
 	@echo "make mock - mock data"
+	@echo "make gqlgen - generate graphql files"
 	@echo "make test - test all"
 	@echo "make test-controller - test controller"
 	@echo "make test-model - test model"

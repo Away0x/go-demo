@@ -3,7 +3,7 @@ package services
 import "graphqlapp/app/models"
 
 type IUserServices interface {
-  Detail(id uint) (*models.User, error)
+  Detail(id int) (*models.User, error)
   List() ([]*models.User, error)
   Create(u *models.User) (*models.User, error)
 }
@@ -20,13 +20,13 @@ func (*UserServices) List() (users []*models.User, err error) {
   return
 }
 
-func (*UserServices) Detail(id uint) (user *models.User, err error) {
+func (*UserServices) Detail(id int) (user *models.User, err error) {
   user = new(models.User)
   err = models.DB().First(user, id).Error
   return
 }
 
-func (*UserServices) Create(u *models.User) (user *models.User, err error) {
-  err = models.CreateModel(u)
-  return
+func (*UserServices) Create(u *models.User) (*models.User, error) {
+  err := models.CreateModel(u)
+  return u, err
 }

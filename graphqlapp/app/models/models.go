@@ -15,14 +15,14 @@ const (
 )
 
 type BaseModel struct {
-  ID        uint `gorm:"primaryKey;autoIncrement" json:"id"`
+  ID        int `gorm:"primaryKey;autoIncrement" json:"id"`
   CreatedAt time.Time `json:"created_at"`
   UpdatedAt time.Time `json:"updated_at"`
   DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
 func (m *BaseModel) IDString() string {
-  return strconv.Itoa(int(m.ID))
+  return strconv.Itoa(m.ID)
 }
 
 func DB() *gorm.DB {
