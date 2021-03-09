@@ -64,6 +64,7 @@ func registerGraphql(router *core.Application) {
   }
 
   router.RegisterHandler(router.POST, graphqlPath, func(c *appContext.AppContext) error {
+    resolvers.SaveAppContextToContext(c)
     graphqlHandler.ServeHTTP(c.Response(), c.Request())
     return nil
   })
