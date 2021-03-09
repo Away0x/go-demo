@@ -18,5 +18,5 @@ func registerAPI(router *core.Application) {
     return c.SuccessJSON(context.RespData{
       "hello": "world",
     })
-  })
+  }).Name = "test"
 }

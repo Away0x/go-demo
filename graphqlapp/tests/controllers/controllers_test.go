@@ -2,10 +2,9 @@ package controllers_test
 
 import (
   "github.com/gavv/httpexpect/v2"
-  "graphqlapp/bootstrap"
   "graphqlapp/core"
+  "graphqlapp/tests"
   "net/http"
-  "os"
   "testing"
 )
 
@@ -18,10 +17,9 @@ func TestMain(m *testing.M) {
 }
 
 func before() (err error) {
-  err = os.Chdir("../..")
-  bootstrap.SetupConfig("config/test.yaml", "yaml")
-  bootstrap.SetupDB()
-  bootstrap.SetupServer()
+  err = tests.SetupConfig()
+  tests.SetupDB()
+  tests.SetupServer()
   return
 }
 

@@ -2,9 +2,8 @@ package graphql_test
 
 import (
   "github.com/99designs/gqlgen/client"
-  "graphqlapp/bootstrap"
   "graphqlapp/routes"
-  "os"
+  "graphqlapp/tests"
   "testing"
 )
 
@@ -19,9 +18,8 @@ func TestMain(m *testing.M)  {
 }
 
 func before() (err error) {
-  err = os.Chdir("../..")
-  bootstrap.SetupConfig("config/test.yaml", "yaml")
-  bootstrap.SetupDB()
+  err = tests.SetupConfig()
+  tests.SetupDB()
 
   graphqlClient = client.New(routes.NewGraphqlHandler())
   return

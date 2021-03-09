@@ -9,7 +9,7 @@ import (
 const (
   defaultTempDir = "storage"
   defaultAppPort = "9999"
-  defaultAppName = "app"
+  defaultAppName = "server"
 )
 
 var defaultConfigMap = map[string]interface{}{
@@ -46,12 +46,15 @@ var defaultConfigMap = map[string]interface{}{
   "TOKEN.REFRESH_TOKEN_LIFETIME": 60 * 24 * time.Minute,
 
   // log
-  "LOG.PREFIX":       "[ZAP_LOGGER]",
-  "LOG.FOLDER":       defaultTempDir + "/logs/zap",
+  "LOG.PREFIX":       "[APP]",
+  "LOG.FOLDER":       defaultTempDir + "/logs/app",
   "LOG.LEVEL":        "debug", // log level: debug, info, warn, error, dpanic, panic, fatal
   "LOG.MAXSIZE":      10,
   "LOG.MAX_BACK_UPS": 5,
   "LOG.MAX_AGES":     30,
+
+  // test
+  "TEST.ENABLE_LOG": true,
 }
 
 func setupDefaultConfig() {

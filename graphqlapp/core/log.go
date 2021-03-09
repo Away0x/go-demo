@@ -17,7 +17,7 @@ func SetupLog() {
   logger := zap.New(core, zap.AddCaller())
   appLog = logger.Sugar()
 
-  fmt.Printf("\nLogger initialization successful: in %s, level is %s\n", GetConfig().String("LOG.FOLDER"), getLevel())
+  fmt.Printf("\n(SETUP) Logger initialization successful: in %s, level is %s\n", GetConfig().String("LOG.FOLDER"), getLevel())
 }
 
 func getEncoder() zapcore.Encoder {

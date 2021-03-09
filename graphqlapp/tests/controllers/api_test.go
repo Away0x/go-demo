@@ -15,4 +15,5 @@ func TestApiController(t *testing.T) {
 
   resp = getOKApiJSon(client.GET(url))
   resp.Value("code").Equal(constants.SuccessCode)
+  resp.Path("$..hello").Equal([]string{"world"})
 }

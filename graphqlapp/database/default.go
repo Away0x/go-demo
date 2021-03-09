@@ -39,7 +39,7 @@ func SetupDefaultDatabase() (*gorm.DB, *sql.DB) {
   sqlDB.SetMaxOpenConns(core.GetConfig().Int("DB.DEFAULT.MAX_OPEN_CONNECTIONS"))
   sqlDB.SetMaxIdleConns(core.GetConfig().Int("DB.DEFAULT.MAX_IDLE_CONNECTIONS"))
 
-  fmt.Printf("\nDefault database connection successful: %s\n", dsn)
+  fmt.Printf("\n(SETUP) Default database connection successful: %s\n", dsn)
   return dd, sqlDB
 }
 

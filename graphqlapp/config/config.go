@@ -39,7 +39,7 @@ func Setup(configFilePath, configFileType string) {
   viper.SetEnvPrefix(viper.GetString("APP.NAME")) // 环境变量前缀
   viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 
-  fmt.Printf("\nConfiguration file loaded successfully: %s\n", configFilePath)
+  fmt.Printf("\n(SETUP) Configuration file loaded successfully: %s\n", configFilePath)
 }
 
 func WriteConfig(filename string) error {

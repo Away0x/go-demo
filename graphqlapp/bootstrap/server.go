@@ -28,7 +28,12 @@ func SetupServer() {
 
   SetupServerRender()
 
-  fmt.Printf("\napp mode is %s, %s\n\n", core.GetConfig().AppMode(), core.GetConfig().String("APP.URL"))
+  fmt.Printf(
+    "\n(SETUP) app(%s) mode is %s, %s\n\n",
+    core.GetConfig().String("APP.NAME"),
+    core.GetConfig().AppMode(),
+    core.GetConfig().String("APP.URL"),
+  )
 }
 
 func RunServer() {

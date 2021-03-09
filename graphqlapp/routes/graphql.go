@@ -60,12 +60,12 @@ func registerGraphql(router *core.Application) {
     router.RegisterHandler(router.GET, graphUIPath, func(c *appContext.AppContext) error {
       playgroundHandler.ServeHTTP(c.Response(), c.Request())
       return nil
-    })
+    }).Name = "graphql-ui"
   }
 
   router.RegisterHandler(router.POST, graphqlPath, func(c *appContext.AppContext) error {
     resolvers.SaveAppContextToContext(c)
     graphqlHandler.ServeHTTP(c.Response(), c.Request())
     return nil
-  })
+  }).Name = "graphql-query"
 }

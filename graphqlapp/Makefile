@@ -1,60 +1,75 @@
 APP_NAME = "graphqlapp"
 PROXY = "https://goproxy.cn"
 
+.PHONY :default
 default:
 	go build -o ${APP_NAME}
-	# env GOOS=linux GOARCH=amd64 go build -o ${APP_NAME}
 
+.PHONY :install
 install:
 	env GOPROXY=${PROXY} go mod download
 
+.PHONY :version
 version:
 	go run main.go version
 
+.PHONY :dev
 dev:
   # go install -u github.com/cosmtrek/air
-	 env GRAPHQLAPP_APP_MODE=development air -c air.toml
+	air -c air.toml
 
-deploy:
-	make && ./bin/deploy restart
+.PHONY :prod
+prod:
+	make
+	./${APP_NAME} server -c config/production.yaml
 
+.PHONY :api-doc
 api-doc:
   # go install -u github.com/swaggo/swag/cmd/swag
 	swag init -g routes/api.go
 
+.PHONY :mock
 mock:
-	env GRAPHQLAPP_APP_MODE=development go run main.go mock
+	env SERVER_APP_MODE=test go run main.go mock
 
+.PHONY :gqlgen
 gqlgen:
 	gqlgen generate
 
+.PHONY :test-controller
 test-controller:
-	env GRAPHQLAPP_APP_MODE=test go test -v ./tests/controllers/...
+	go test -v ./tests/controllers/...
 
+.PHONY :test-graphql
 test-graphql:
-	env GRAPHQLAPP_APP_MODE=test go test -v ./tests/graphql/...
+	go test -v ./tests/graphql/...
 
+.PHONY :test-model
 test-model:
-	env GRAPHQLAPP_APP_MODE=test go test -v ./tests/models/...
+	go test -v ./tests/models/...
 
+.PHONY :test-service
 test-service:
-	env GRAPHQLAPP_APP_MODE=test go test -v ./tests/services/...
+	go test -v ./tests/services/...
 
+.PHONY :test
 test:
 	make test-model;
 	make test-service;
 	make test-controller
 	make test-graphql
 
+.PHONY :clean
 clean:
 	if [ -f ${APP_NAME} ]; then rm ${APP_NAME}; fi
 
+.PHONY :help
 help:
 	@echo "make - compile the source code"
 	@echo "make install - install dep"
 	@echo "make version - print version"
-	@echo "make dev - run go fresh"
-	@echo "make deploy - deploy app"
+	@echo "make dev - Development environment run service"
+	@echo "make prod - Production environment run service"
 	@echo "make mock - mock data"
 	@echo "make gqlgen - generate graphql files"
 	@echo "make test - test all"

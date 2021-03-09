@@ -6,6 +6,6 @@ DB:
     CONNECTION: mysql
     HOST: 127.0.0.1
     PORT: 3306
-    DATABASE: graphql
+    DATABASE: graphql_development
     USERNAME: root
     PASSWORD: a12345678
