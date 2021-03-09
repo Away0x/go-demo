@@ -13,7 +13,7 @@ func TestUser(t *testing.T) {
       }
     }
 
-    graphqlClient.MustPost(`query { user(id: 22) { id } }`, &resp,)
+    graphqlClient.MustPost(`query { user(id: 22) { id } }`, &resp)
     require.Equal(t, 22, resp.User.ID)
   })
 }

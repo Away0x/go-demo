@@ -4,10 +4,11 @@ package resolvers
 // will be copied through when generating and any unknown code will be moved to the end.
 
 import (
-	"context"
-	"graphqlapp/app/graph/generated"
-	gqlmodels "graphqlapp/app/graph/models"
-	"graphqlapp/app/models"
+  "context"
+  "graphqlapp/app/graph/generated"
+  gqlmodels "graphqlapp/app/graph/models"
+  "graphqlapp/app/models"
+  "graphqlapp/core/errno"
 )
 
 func (r *mutationResolver) CreateUser(ctx context.Context, input *gqlmodels.CreateUser) (*models.User, error) {
@@ -16,7 +17,7 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input *gqlmodels.Crea
 		Email: input.Email,
 	}
 	err := models.CreateModel(u)
-	return u, err
+	return u, errno.DatabaseErr.WithErr(err)
 }
 
 func (r *mutationResolver) UpdateUser(ctx context.Context, id *int, input *gqlmodels.UpdateUser) (*models.User, error) {
@@ -29,19 +30,19 @@ func (r *mutationResolver) UpdateUser(ctx context.Context, id *int, input *gqlmo
 	u.Name = *input.Name
 	u.Email = *input.Email
 	err = models.UpdateModel(u)
-	return u, err
+	return u, errno.DatabaseErr.WithErr(err)
 }
 
 func (r *queryResolver) User(ctx context.Context, id *int) (*models.User, error) {
 	u := new(models.User)
 	err := models.DB().First(u, id).Error
-	return u, err
+	return u, errno.NotFoundErr.WithErr(err)
 }
 
 func (r *queryResolver) Users(ctx context.Context, page *int, perPage *int) (*gqlmodels.UserList, error) {
 	items, total, err := r.UserServices.List(*page, *perPage)
 	if err != nil {
-		return nil, err
+		return nil, errno.NotFoundErr.WithErr(err)
 	}
 
 	return &gqlmodels.UserList{
