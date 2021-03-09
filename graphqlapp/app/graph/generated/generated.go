@@ -6,11 +6,12 @@ import (
 	"bytes"
 	"context"
 	"errors"
-	gqlmodels "graphqlapp/app/graph/models"
+	"graphqlapp/app/graph/gqlmodels"
 	"graphqlapp/app/models"
 	"strconv"
 	"sync"
 	"sync/atomic"
+	"time"
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/introspection"
@@ -62,9 +63,10 @@ type ComplexityRoot struct {
 	}
 
 	User struct {
-		Email func(childComplexity int) int
-		ID    func(childComplexity int) int
-		Name  func(childComplexity int) int
+		CreatedAt func(childComplexity int) int
+		Email     func(childComplexity int) int
+		ID        func(childComplexity int) int
+		Name      func(childComplexity int) int
 	}
 
 	UserList struct {
@@ -179,6 +181,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.Users(childComplexity, args["page"].(*int), args["perPage"].(*int)), true
 
+	case "User.createdAt":
+		if e.complexity.User.CreatedAt == nil {
+			break
+		}
+
+		return e.complexity.User.CreatedAt(childComplexity), true
+
 	case "User.email":
 		if e.complexity.User.Email == nil {
 			break
@@ -283,7 +292,9 @@ var sources = []*ast.Source{
   password: String!
 }
 `, BuiltIn: false},
-	{Name: "app/graph/schema.graphql", Input: `type Query {
+	{Name: "app/graph/schema.graphql", Input: `scalar Time
+
+type Query {
   user(id: Int): User!
   users(page: Int = 1, perPage: Int = 10): UserList
 }
@@ -310,6 +321,7 @@ type PageResult {
   id: ID!
   name: String!
   email: String!
+  createdAt: Time!
 }
 
 type UserList {
@@ -340,7 +352,7 @@ func (ec *executionContext) field_Mutation_createUser_args(ctx context.Context, 
 	var arg0 *gqlmodels.CreateUser
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalOCreateUser2ᚖgraphqlappᚋappᚋgraphᚋmodelsᚐCreateUser(ctx, tmp)
+		arg0, err = ec.unmarshalOCreateUser2ᚖgraphqlappᚋappᚋgraphᚋgqlmodelsᚐCreateUser(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -355,7 +367,7 @@ func (ec *executionContext) field_Mutation_login_args(ctx context.Context, rawAr
 	var arg0 gqlmodels.DoLogin
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNDoLogin2graphqlappᚋappᚋgraphᚋmodelsᚐDoLogin(ctx, tmp)
+		arg0, err = ec.unmarshalNDoLogin2graphqlappᚋappᚋgraphᚋgqlmodelsᚐDoLogin(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -379,7 +391,7 @@ func (ec *executionContext) field_Mutation_updateUser_args(ctx context.Context, 
 	var arg1 *gqlmodels.UpdateUser
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg1, err = ec.unmarshalOUpdateUser2ᚖgraphqlappᚋappᚋgraphᚋmodelsᚐUpdateUser(ctx, tmp)
+		arg1, err = ec.unmarshalOUpdateUser2ᚖgraphqlappᚋappᚋgraphᚋgqlmodelsᚐUpdateUser(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -789,7 +801,7 @@ func (ec *executionContext) _Query_users(ctx context.Context, field graphql.Coll
 	}
 	res := resTmp.(*gqlmodels.UserList)
 	fc.Result = res
-	return ec.marshalOUserList2ᚖgraphqlappᚋappᚋgraphᚋmodelsᚐUserList(ctx, field.Selections, res)
+	return ec.marshalOUserList2ᚖgraphqlappᚋappᚋgraphᚋgqlmodelsᚐUserList(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -968,6 +980,41 @@ func (ec *executionContext) _User_email(ctx context.Context, field graphql.Colle
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _User_createdAt(ctx context.Context, field graphql.CollectedField, obj *models.User) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "User",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedAt, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _UserList_items(ctx context.Context, field graphql.CollectedField, obj *gqlmodels.UserList) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -1035,7 +1082,7 @@ func (ec *executionContext) _UserList_pageInfo(ctx context.Context, field graphq
 	}
 	res := resTmp.(*gqlmodels.PageResult)
 	fc.Result = res
-	return ec.marshalNPageResult2ᚖgraphqlappᚋappᚋgraphᚋmodelsᚐPageResult(ctx, field.Selections, res)
+	return ec.marshalNPageResult2ᚖgraphqlappᚋappᚋgraphᚋgqlmodelsᚐPageResult(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) ___Directive_name(ctx context.Context, field graphql.CollectedField, obj *introspection.Directive) (ret graphql.Marshaler) {
@@ -2411,6 +2458,11 @@ func (ec *executionContext) _User(ctx context.Context, sel ast.SelectionSet, obj
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
+		case "createdAt":
+			out.Values[i] = ec._User_createdAt(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -2714,7 +2766,7 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
-func (ec *executionContext) unmarshalNDoLogin2graphqlappᚋappᚋgraphᚋmodelsᚐDoLogin(ctx context.Context, v interface{}) (gqlmodels.DoLogin, error) {
+func (ec *executionContext) unmarshalNDoLogin2graphqlappᚋappᚋgraphᚋgqlmodelsᚐDoLogin(ctx context.Context, v interface{}) (gqlmodels.DoLogin, error) {
 	res, err := ec.unmarshalInputDoLogin(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
@@ -2749,7 +2801,7 @@ func (ec *executionContext) marshalNInt2int(ctx context.Context, sel ast.Selecti
 	return res
 }
 
-func (ec *executionContext) marshalNPageResult2ᚖgraphqlappᚋappᚋgraphᚋmodelsᚐPageResult(ctx context.Context, sel ast.SelectionSet, v *gqlmodels.PageResult) graphql.Marshaler {
+func (ec *executionContext) marshalNPageResult2ᚖgraphqlappᚋappᚋgraphᚋgqlmodelsᚐPageResult(ctx context.Context, sel ast.SelectionSet, v *gqlmodels.PageResult) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -2766,6 +2818,21 @@ func (ec *executionContext) unmarshalNString2string(ctx context.Context, v inter
 
 func (ec *executionContext) marshalNString2string(ctx context.Context, sel ast.SelectionSet, v string) graphql.Marshaler {
 	res := graphql.MarshalString(v)
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "must not be null")
+		}
+	}
+	return res
+}
+
+func (ec *executionContext) unmarshalNTime2timeᚐTime(ctx context.Context, v interface{}) (time.Time, error) {
+	res, err := graphql.UnmarshalTime(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNTime2timeᚐTime(ctx context.Context, sel ast.SelectionSet, v time.Time) graphql.Marshaler {
+	res := graphql.MarshalTime(v)
 	if res == graphql.Null {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -3078,7 +3145,7 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	return graphql.MarshalBoolean(*v)
 }
 
-func (ec *executionContext) unmarshalOCreateUser2ᚖgraphqlappᚋappᚋgraphᚋmodelsᚐCreateUser(ctx context.Context, v interface{}) (*gqlmodels.CreateUser, error) {
+func (ec *executionContext) unmarshalOCreateUser2ᚖgraphqlappᚋappᚋgraphᚋgqlmodelsᚐCreateUser(ctx context.Context, v interface{}) (*gqlmodels.CreateUser, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -3125,7 +3192,7 @@ func (ec *executionContext) marshalOString2ᚖstring(ctx context.Context, sel as
 	return graphql.MarshalString(*v)
 }
 
-func (ec *executionContext) unmarshalOUpdateUser2ᚖgraphqlappᚋappᚋgraphᚋmodelsᚐUpdateUser(ctx context.Context, v interface{}) (*gqlmodels.UpdateUser, error) {
+func (ec *executionContext) unmarshalOUpdateUser2ᚖgraphqlappᚋappᚋgraphᚋgqlmodelsᚐUpdateUser(ctx context.Context, v interface{}) (*gqlmodels.UpdateUser, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -3133,7 +3200,7 @@ func (ec *executionContext) unmarshalOUpdateUser2ᚖgraphqlappᚋappᚋgraphᚋm
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOUserList2ᚖgraphqlappᚋappᚋgraphᚋmodelsᚐUserList(ctx context.Context, sel ast.SelectionSet, v *gqlmodels.UserList) graphql.Marshaler {
+func (ec *executionContext) marshalOUserList2ᚖgraphqlappᚋappᚋgraphᚋgqlmodelsᚐUserList(ctx context.Context, sel ast.SelectionSet, v *gqlmodels.UserList) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}

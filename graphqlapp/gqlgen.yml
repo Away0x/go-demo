@@ -6,7 +6,7 @@ exec:
   package: generated
 
 model:
-  filename: app/graph/models/models_gen.go
+  filename: app/graph/gqlmodels/models_gen.go
   package: gqlmodels
 
 resolver:
@@ -15,7 +15,7 @@ resolver:
   package: resolvers
 
 autobind:
-  - "graphqlapp/app/graph/models"
+  - "graphqlapp/app/graph/gqlmodels"
 
 models:
   ID:

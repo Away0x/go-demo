@@ -7,7 +7,7 @@ import (
 	"context"
 	"fmt"
 	"graphqlapp/app/graph/generated"
-	gqlmodels "graphqlapp/app/graph/models"
+	"graphqlapp/app/graph/gqlmodels"
 	"graphqlapp/app/models"
 	"graphqlapp/core/errno"
 )

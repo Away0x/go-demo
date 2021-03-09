@@ -76,7 +76,10 @@ func SetupServerRender() {
   core.GetApplication().Renderer = render
 
   // tags
-  pongo2.RegisterTag("route", tplutils.RouteTag)
-  pongo2.RegisterTag("static", tplutils.StaticTag)
+  err := pongo2.RegisterTag("route", tplutils.RouteTag)
+  err = pongo2.RegisterTag("static", tplutils.StaticTag)
+  if err != nil {
+    panic(err)
+  }
 }
 
