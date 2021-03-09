@@ -4,6 +4,8 @@ type Query {
 }
 
 type Mutation {
+  login(input: DoLogin!): User!
+
   createUser(input: CreateUser): User!
   updateUser(id: Int, input: UpdateUser): User!
 }

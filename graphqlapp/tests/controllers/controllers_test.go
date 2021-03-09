@@ -39,7 +39,7 @@ func apiClient(t *testing.T) *httpexpect.Expect {
     Reporter: httpexpect.NewAssertReporter(t),
     Printers: []httpexpect.Printer{
       // log
-      // httpexpect.NewDebugPrinter(t, true),
+      httpexpect.NewDebugPrinter(t, true),
     },
   })
 }

@@ -4,12 +4,17 @@ package resolvers
 // will be copied through when generating and any unknown code will be moved to the end.
 
 import (
-  "context"
-  "graphqlapp/app/graph/generated"
-  gqlmodels "graphqlapp/app/graph/models"
-  "graphqlapp/app/models"
-  "graphqlapp/core/errno"
+	"context"
+	"fmt"
+	"graphqlapp/app/graph/generated"
+	gqlmodels "graphqlapp/app/graph/models"
+	"graphqlapp/app/models"
+	"graphqlapp/core/errno"
 )
+
+func (r *mutationResolver) Login(ctx context.Context, input gqlmodels.DoLogin) (*models.User, error) {
+	panic(fmt.Errorf("not implemented"))
+}
 
 func (r *mutationResolver) CreateUser(ctx context.Context, input *gqlmodels.CreateUser) (*models.User, error) {
 	u := &models.User{

@@ -11,6 +11,11 @@ type CreateUser struct {
 	Email string `json:"email"`
 }
 
+type DoLogin struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
 type PageParams struct {
 	Page    int `json:"page"`
 	PerPage int `json:"perPage"`

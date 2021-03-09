@@ -50,6 +50,10 @@ func (c *AppConfig) IsDev() bool {
   return c.AppMode() == config.ModeDevelopment
 }
 
+func (c *AppConfig) IsTest() bool {
+  return c.AppMode() == config.ModeTest
+}
+
 func (c *AppConfig) AppMode() config.Mode {
   mode := config.Mode(c.String("APP.Mode"))
 

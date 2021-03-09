@@ -39,7 +39,7 @@ var defaultConfigMap = map[string]interface{}{
   "DB.DEFAULT.OPTIONS":              "charset=utf8&parseTime=True&loc=Local",
   "DB.DEFAULT.MAX_OPEN_CONNECTIONS": 100,
   "DB.DEFAULT.MAX_IDLE_CONNECTIONS": 20,
-  "DB.DEFAULT.AUTO_MIGRATE":         true,
+  "DB.DEFAULT.AUTO_MIGRATE":         false,
 
   // jwt token
   "TOKEN.ACCESS_TOKEN_LIFETIME":  60 * time.Minute,

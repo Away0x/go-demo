@@ -8,9 +8,11 @@ require (
 	github.com/fatih/structs v1.1.0 // indirect
 	github.com/flosch/pongo2 v0.0.0-20200913210552-0d938eb266f3
 	github.com/gavv/httpexpect/v2 v2.2.0
+	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/imkira/go-interpol v1.1.0 // indirect
 	github.com/labstack/echo/v4 v4.2.0
 	github.com/natefinch/lumberjack v2.0.0+incompatible
+	github.com/pkg/errors v0.9.1 // indirect
 	github.com/spf13/cobra v1.1.3
 	github.com/spf13/viper v1.7.1
 	github.com/stretchr/testify v1.7.0

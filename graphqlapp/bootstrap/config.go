@@ -9,8 +9,11 @@ import (
 func SetupConfig(configFilePath, configFileType string) {
   config.Setup(configFilePath, configFileType)
   core.NewAppConfig()
-  err := config.WriteConfig(core.GetConfig().String("APP.TEMP_DIR") + "/config.json")
-  if err != nil {
-    log.Fatal(err)
+
+  if !core.GetConfig().IsTest() {
+    err := config.WriteConfig(core.GetConfig().String("APP.TEMP_DIR") + "/config.json")
+    if err != nil {
+      log.Fatal(err)
+    }
   }
 }

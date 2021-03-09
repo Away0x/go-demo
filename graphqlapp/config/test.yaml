@@ -9,3 +9,4 @@ DB:
     DATABASE: graphql_development
     USERNAME: root
     PASSWORD: a12345678
+    AUTO_MIGRATE: on

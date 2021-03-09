@@ -1,0 +1,4 @@
+input DoLogin {
+  username: String!
+  password: String!
+}
