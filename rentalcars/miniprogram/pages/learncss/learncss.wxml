@@ -1,0 +1,8 @@
+<text wx:if="{{showPath}}">12345</text>
+<block wx:else>
+    <text>learn css</text>
+</block>
+<view class="item cu-avatar xl radius" wx:for="{{values}}" wx:for-item="val" wx:key="id">
+    value is {{val.name}}
+    <view class="cu-tag badge">99+</view>
+</view>

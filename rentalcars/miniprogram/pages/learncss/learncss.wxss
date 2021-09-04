@@ -1,0 +1,7 @@
+/* {{page}}.wxss */
+
+.item.cu-avatar.xl {
+    width: unset;
+    padding-left: 20rpx;
+    padding-right: 20rpx;
+}

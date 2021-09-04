@@ -1,0 +1,21 @@
+<map
+    id="map"
+    latitude="{{location.latitude}}"
+    longitude="{{location.longitude}}"
+    scale="{{scale}}"
+    setting="{{setting}}"
+    enable-overlooking="{{isOverLooking}}"
+    enable-3D="{{is3D}}"
+    markers="{{markers}}"
+>
+    <cover-view class="icon-container">
+        <cover-image wx:if="{{!avatarURL}}" class="round" src="../../assets/images/account.png" bindtap="onMyTripsTap"></cover-image>
+        <cover-image wx:if="{{avatarURL}}" class="round" src="{{avatarURL}}" bindtap="onMyTripsTap"></cover-image>
+        <cover-image src="../../assets/images/my_location.png"
+                     bindtap="onMyLocationTap"
+        >my location icon</cover-image>
+    </cover-view>
+    <cover-view class="btn-container bg-grey round" bindtap="onScanClicked">
+        <cover-view>扫码租车</cover-view>
+    </cover-view>
+</map>
