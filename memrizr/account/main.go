@@ -8,18 +8,16 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
-
-	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	log.Println("Starting server ...")
 
-	router := gin.Default()
+	router, err := inject()
 
-	router.GET("/api/account", func(c *gin.Context) {
-		c.String(http.StatusOK, "Welcome Gin Server 2")
-	})
+	if err != nil {
+		log.Fatalf("Failure to inject data sources: %v\n", err)
+	}
 
 	srv := &http.Server{
 		Addr:    ":8080",
