@@ -10,10 +10,11 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"memrizr/model/apperrors"
 	"net/http"
 	"sync"
 	"time"
+
+	"memrizr/model/apperrors"
 
 	"github.com/gin-gonic/gin"
 )

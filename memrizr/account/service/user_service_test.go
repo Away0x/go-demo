@@ -3,11 +3,12 @@ package service
 import (
 	"context"
 	"fmt"
+	"testing"
+
 	"memrizr/model"
 	"memrizr/model/apperrors"
 	"memrizr/model/fixture"
 	"memrizr/model/mocks"
-	"testing"
 
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"

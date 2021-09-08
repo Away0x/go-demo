@@ -1,20 +1,19 @@
 {
-    "folders": [
-      {
-        "name": "account",
-        "path": "account"
-      },
-      {
-        "name": "account-client",
-        "path": "account-client"
-      },
-      {
-        "name": "memrizr",
-        "path": "."
-      }
-    ],
-    "settings": {
-      "css.validate": false
+  "folders": [
+    {
+      "name": "account",
+      "path": "account"
+    },
+    {
+      "name": "account-client",
+      "path": "account-client"
+    },
+    {
+      "name": "memrizr",
+      "path": "."
     }
+  ],
+  "settings": {
+    "css.validate": false
   }
-  
+}

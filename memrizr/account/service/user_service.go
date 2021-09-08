@@ -3,11 +3,12 @@ package service
 import (
 	"context"
 	"log"
-	"memrizr/model"
-	"memrizr/model/apperrors"
 	"mime/multipart"
 	"net/url"
 	"path"
+
+	"memrizr/model"
+	"memrizr/model/apperrors"
 
 	"github.com/google/uuid"
 )
@@ -35,7 +36,10 @@ func NewUserService(c *USConfig) model.UserService {
 	}
 }
 
-func (s *userService) ClearProfileImage(ctx context.Context, uid uuid.UUID) error {
+func (s *userService) ClearProfileImage(
+	ctx context.Context,
+	uid uuid.UUID,
+) error {
 	user, err := s.UserRepository.FindByID(ctx, uid)
 
 	if err != nil {

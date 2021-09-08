@@ -2,6 +2,7 @@ package mocks
 
 import (
 	"context"
+
 	"memrizr/model"
 
 	"github.com/google/uuid"

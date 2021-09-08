@@ -3,12 +3,13 @@ package handler
 import (
 	"encoding/json"
 	"fmt"
-	"memrizr/model"
-	"memrizr/model/apperrors"
-	"memrizr/model/mocks"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"memrizr/model"
+	"memrizr/model/apperrors"
+	"memrizr/model/mocks"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -42,7 +43,8 @@ func TestMe(t *testing.T) {
 		router.Use(func(c *gin.Context) {
 			c.Set("user", &model.User{
 				UID: uid,
-			})
+			},
+			)
 		})
 
 		NewHandler(&Config{

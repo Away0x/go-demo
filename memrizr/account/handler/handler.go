@@ -1,16 +1,19 @@
 package handler
 
 import (
-	"memrizr/model"
 	"time"
+
+	"memrizr/handler/middleware"
+	"memrizr/model"
+	"memrizr/model/apperrors"
 
 	"github.com/gin-gonic/gin"
 )
 
 // Handler struct holds required services for handler to function
 type Handler struct {
-	UserService model.UserService
-	// TokenService model.TokenService
+	UserService  model.UserService
+	TokenService model.TokenService
 	MaxBodyBytes int64
 }
 
@@ -18,10 +21,11 @@ type Handler struct {
 // handler layer on handler initialization
 type Config struct {
 	R               *gin.Engine
+	UserService     model.UserService
+	TokenService    model.TokenService
 	BaseURL         string
 	TimeoutDuration time.Duration
 	MaxBodyBytes    int64
-	UserService     model.UserService
 }
 
 // NewHandler initializes the handler with required injected services along with http routes
@@ -30,18 +34,29 @@ func NewHandler(c *Config) {
 	// Create a handler (which will later have injected services)
 	h := &Handler{
 		UserService:  c.UserService,
+		TokenService: c.TokenService,
 		MaxBodyBytes: c.MaxBodyBytes,
-	}
+	} // currently has no properties
 
 	// Create an account group
 	g := c.R.Group(c.BaseURL)
 
-	g.GET("/me", h.Me)
+	if gin.Mode() != gin.TestMode {
+		g.Use(middleware.Timeout(c.TimeoutDuration, apperrors.NewServiceUnavailable()))
+		g.GET("/me", middleware.AuthUser(h.TokenService), h.Me)
+		g.POST("/signout", middleware.AuthUser(h.TokenService), h.Signout)
+		g.PUT("/details", middleware.AuthUser(h.TokenService), h.Details)
+		g.POST("/image", middleware.AuthUser(h.TokenService), h.Image)
+		g.DELETE("/image", middleware.AuthUser(h.TokenService), h.DeleteImage)
+	} else {
+		g.GET("/me", h.Me)
+		g.POST("/signout", h.Signout)
+		g.PUT("/details", h.Details)
+		g.POST("/image", h.Image)
+		g.DELETE("/image", h.DeleteImage)
+	}
+
 	g.POST("/signup", h.Signup)
 	g.POST("/signin", h.Signin)
-	g.POST("/signout", h.Signout)
 	g.POST("/tokens", h.Tokens)
-	g.POST("/image", h.Image)
-	g.DELETE("/image", h.DeleteImage)
-	g.PUT("/details", h.Details)
 }

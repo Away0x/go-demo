@@ -36,14 +36,10 @@ func comparePasswords(storedPassword string, suppliedPassword string) (bool, err
 	salt, err := hex.DecodeString(pwsalt[1])
 
 	if err != nil {
-		return false, fmt.Errorf("unable to verify user password")
+		return false, fmt.Errorf("Unable to verify user password")
 	}
 
 	shash, err := scrypt.Key([]byte(suppliedPassword), salt, 32768, 8, 1, 32)
-
-	if err != nil {
-		return false, fmt.Errorf("unable to verify user password")
-	}
 
 	return hex.EncodeToString(shash) == pwsalt[0], nil
 }

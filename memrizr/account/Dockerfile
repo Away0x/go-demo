@@ -3,7 +3,8 @@ FROM golang:alpine as builder
 WORKDIR /go/src/app
 
 ENV GO111MODULE=on
-ENV GOPROXY=https://goproxy.cn
+ENV GOPROXY=https://goproxy.cn,https://goproxy.io,direct
+
 RUN go get github.com/cespare/reflex
 
 COPY go.mod .

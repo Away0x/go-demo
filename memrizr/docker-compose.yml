@@ -16,24 +16,24 @@ services:
     volumes:
       # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock
-  # postgres-account:
-  #   image: "postgres:alpine"
-  #   environment:
-  #     - POSTGRES_PASSWORD=password
-  #   ports:
-  #     - "5432:5432"
-  #   #   Set a volume for data and initial sql script
-  #   #   May configure initial db for future demo
-  #   volumes:
-  #     - "pgdata_account:/var/lib/postgresql/data"
-  #     # - ./init:/docker-entrypoint-initdb.d/
-  #   command: ["postgres", "-c", "log_statement=all"]
-  # redis-account:
-  #   image: "redis:alpine"
-  #   ports:
-  #     - "6379:6379"
-  #   volumes:
-  #     - "redisdata:/data"
+  postgres-account:
+    image: "postgres:alpine"
+    environment:
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+    #   Set a volume for data and initial sql script
+    #   May configure initial db for future demo
+    volumes:
+      - "pgdata_account:/var/lib/postgresql/data"
+      # - ./init:/docker-entrypoint-initdb.d/
+    command: ["postgres", "-c", "log_statement=all"]
+  redis-account:
+    image: "redis:6-alpine"
+    ports:
+      - "6379:6379"
+    volumes:
+      - "redisdata:/data"
   account:
     build:
       context: ./account
@@ -44,35 +44,33 @@ services:
       - "8080"
     labels:
       - "traefik.enable=true"
-      # add "127.0.0.1 local.memrizr.com" to hosts
       - "traefik.http.routers.account.rule=Host(`local.memrizr.com`) && PathPrefix(`/api/account`)"
     environment:
       - ENV=dev
     volumes:
       - ./account:/go/src/app
     # have to use $$ (double-dollar) so docker doesn't try to substitute a variable
-    # depends_on:
-    #   - postgres-account
-    #   - redis-account
-    #   - reverse-proxy
-    # 实时重载
+    depends_on:
+      - postgres-account
+      - redis-account
+      - reverse-proxy
     command: reflex -r "\.go$$" -s -- sh -c "go run ./"
-  # account-client:
-  #   build:
-  #     context: ./account-client
-  #   image: account-client # if we don't give image name, traefik won't create router 🤷‍♂️
-  #   expose:
-  #     - "3000"
-  #   ports:
-  #     - "3000:3000"
-  #   labels:
-  #     - "traefik.enable=true"
-  #     - "traefik.http.routers.account-client.rule=Host(`local.memrizr.com`) && PathPrefix(`/account`)"
-  #   volumes:
-  #     - ./account-client:/app
-  #     - /app/node_modules #avoid overwriting node_modules
-  #   depends_on: 
-  #     - reverse-proxy    
+  account-client:
+    build:
+      context: ./account-client
+    image: account-client # if we don't give image name, traefik won't create router 🤷‍♂️
+    expose:
+      - "3000"
+    ports:
+      - "3000:3000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.account-client.rule=Host(`local.memrizr.com`) && PathPrefix(`/account`)"
+    volumes:
+      - ./account-client:/app
+      - /app/node_modules #avoid overwriting node_modules
+    depends_on: 
+      - reverse-proxy    
 volumes:
   pgdata_account:
   redisdata:

@@ -2,8 +2,9 @@ package mocks
 
 import (
 	"context"
-	"memrizr/model"
 	"mime/multipart"
+
+	"memrizr/model"
 
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/mock"

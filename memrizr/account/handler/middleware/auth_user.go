@@ -1,9 +1,10 @@
 package middleware
 
 import (
+	"strings"
+
 	"memrizr/model"
 	"memrizr/model/apperrors"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
