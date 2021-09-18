@@ -24,7 +24,7 @@ var json2structCmd = &cobra.Command{
 		if err != nil {
 			log.Fatalf("json2struct.NewParser err: %v", err)
 		}
-		content := parser.Json2Struct()
+		content := parser.JSON2Struct()
 		log.Printf("输出结果: %s", content)
 	},
 }

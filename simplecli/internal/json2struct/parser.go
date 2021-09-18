@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	TYPE_MAP_STRING_INTERFACE = "map[string]interface {}"
-	TYPE_INTERFACE            = "[]interface {}"
+	TypeMapStringInterface = "map[string]interface {}"
+	TypeInterface          = "[]interface {}"
 )
 
 type Parser struct {
@@ -50,11 +50,11 @@ func NewParser(s string) (*Parser, error) {
 	}, nil
 }
 
-func (p *Parser) Json2Struct() string {
+func (p *Parser) JSON2Struct() string {
 	p.Output.appendSegment(p.StructTag, p.StructName)
 	for parentName, parentValues := range p.Source {
 		valueType := reflect.TypeOf(parentValues).String()
-		if valueType == TYPE_INTERFACE {
+		if valueType == TypeInterface {
 			p.toParentList(parentName, parentValues.([]interface{}), true)
 		} else {
 			var fields Fields
@@ -83,7 +83,7 @@ func (p *Parser) toParentList(parentName string, parentValues []interface{}, isT
 	var fields Fields
 	for _, v := range parentValues {
 		valueType := reflect.TypeOf(v).String()
-		if valueType == TYPE_MAP_STRING_INTERFACE {
+		if valueType == TypeMapStringInterface {
 			fields = append(fields, p.handleParentTypeMapIface(v.(map[string]interface{}))...)
 			p.Children.appendSegment(p.StructTag, parentName)
 			for _, field := range fields.removeDuplicate() {
@@ -110,9 +110,9 @@ func (p *Parser) handleParentTypeMapIface(values map[string]interface{}) Fields 
 			FieldValues: []FieldValue{{CamelCase: true, Value: fieldValueType}},
 		}
 		switch fieldValueType {
-		case TYPE_INTERFACE:
+		case TypeInterface:
 			fieldSegment = p.handleTypeIface(fieldName, fieldValues.([]interface{}))
-		case TYPE_MAP_STRING_INTERFACE:
+		case TypeMapStringInterface:
 			fieldSegment = p.handleTypeMapIface(fieldName, fieldValues.(map[string]interface{}))
 		}
 

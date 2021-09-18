@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 
+	// mysql driver
 	_ "github.com/go-sql-driver/mysql"
 )
 
