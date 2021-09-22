@@ -41,6 +41,7 @@ func Tracing() func(c *gin.Context) {
 			traceID = jaegerContext.TraceID().String()
 			spanID = jaegerContext.SpanID().String()
 		}
+		// 设置 id 以便链路追踪
 		c.Set("X-Trace-ID", traceID)
 		c.Set("X-Span-ID", spanID)
 		c.Request = c.Request.WithContext(newCtx)
