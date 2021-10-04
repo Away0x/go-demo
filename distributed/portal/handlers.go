@@ -60,6 +60,7 @@ func (studentsHandler) renderStudents(w http.ResponseWriter, r *http.Request) {
 		}
 	}()
 
+	// 得到 service url, 通过 http 通信获取其他 service 的数据
 	serviceURL, err := registry.GetProvider(registry.GradingService)
 	if err != nil {
 		return

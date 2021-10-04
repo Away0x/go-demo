@@ -11,14 +11,16 @@ import (
 	"time"
 )
 
+// 服务注册 service 的地址
 const ServerPort = ":3000"
 const ServicesURL = "http://localhost" + ServerPort + "/services"
 
 type registry struct {
-	registrations []Registration
-	mutex         *sync.RWMutex
+	registrations []Registration // 已经注册的服务
+	mutex         *sync.RWMutex  // 互斥锁, 保证并发访问时 registrations 的安全
 }
 
+// 注册服务
 func (r *registry) add(reg Registration) error {
 	r.mutex.Lock()
 	r.registrations = append(r.registrations, reg)
@@ -26,7 +28,7 @@ func (r *registry) add(reg Registration) error {
 	err := r.sendRequiredServices(reg)
 	r.notify(patch{
 		Added: []patchEntry{
-			patchEntry{
+			{
 				Name: reg.ServiceName,
 				URL:  reg.ServiceURL,
 			},
@@ -35,6 +37,7 @@ func (r *registry) add(reg Registration) error {
 	return err
 }
 
+// 服务更新, 通知已注册的服务
 func (r registry) notify(fullPatch patch) {
 	r.mutex.RLock()
 	defer r.mutex.RUnlock()
@@ -68,6 +71,7 @@ func (r registry) notify(fullPatch patch) {
 	}
 }
 
+// 为注册服务添加依赖服务
 func (r registry) sendRequiredServices(reg Registration) error {
 	r.mutex.RLock()
 	defer r.mutex.RUnlock()
@@ -90,6 +94,7 @@ func (r registry) sendRequiredServices(reg Registration) error {
 	return nil
 }
 
+// 向注册的服务发送请求 (参数为该服务所依赖的服务)
 func (r registry) sendPatch(p patch, url string) error {
 	d, err := json.Marshal(p)
 	if err != nil {
@@ -102,6 +107,7 @@ func (r registry) sendPatch(p patch, url string) error {
 	return nil
 }
 
+// 取消注册
 func (r *registry) remove(url string) error {
 	for i := range reg.registrations {
 		if reg.registrations[i].ServiceURL == url {
@@ -122,9 +128,11 @@ func (r *registry) remove(url string) error {
 	return fmt.Errorf("Service at URL %s not found", url)
 }
 
+// 心跳检测
 func (r *registry) heartbeat(freq time.Duration) {
 	for {
 		var wg sync.WaitGroup
+		// 并发的向已注册的服务发送健康检查的请求
 		for _, reg := range r.registrations {
 			wg.Add(1)
 			go func(reg Registration) {
@@ -137,14 +145,20 @@ func (r *registry) heartbeat(freq time.Duration) {
 					} else if res.StatusCode == http.StatusOK {
 						log.Printf("Heartbeat check passed for %v", reg.ServiceName)
 						if !success {
-							r.add(reg)
+							err = r.add(reg)
+							if err != nil {
+								log.Println(err)
+							}
 						}
-						break;
+						break
 					}
 					log.Printf("Heartbeat check failed for %v", reg.ServiceName)
 					if success {
 						success = false
-						r.remove(reg.ServiceURL)
+						err = r.remove(reg.ServiceURL)
+						if err != nil {
+							log.Println(err)
+						}
 					}
 					time.Sleep(1 * time.Second)
 				}
@@ -159,6 +173,7 @@ var once sync.Once
 
 func SetupRegistryService() {
 	once.Do(func() {
+		// 每 3s 检测一下
 		go reg.heartbeat(3 * time.Second)
 	})
 }

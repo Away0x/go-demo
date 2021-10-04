@@ -1,3 +1,4 @@
+/// 供其他 service 调用的方法
 package log
 
 import (
@@ -12,7 +13,7 @@ import (
 func SetClientLogger(serviceURL string, clientService registry.ServiceName) {
 	stlog.SetPrefix(fmt.Sprintf("[%v] - ", clientService))
 	stlog.SetFlags(0)
-	stlog.SetOutput(&clientLogger{url: serviceURL})
+	stlog.SetOutput(&clientLogger{url: serviceURL}) // 设置 log 的输出
 }
 
 type clientLogger struct {

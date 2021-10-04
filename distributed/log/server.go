@@ -11,6 +11,7 @@ var log *stlog.Logger
 
 type fileLog string
 
+// 实现 io.Writer
 func (fl fileLog) Write(data []byte) (int, error) {
 	f, err := os.OpenFile(string(fl), os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0600)
 	if err != nil {
@@ -24,9 +25,11 @@ func Run(destination string) {
 	log = stlog.New(fileLog(destination), "[go] - ", stlog.LstdFlags)
 }
 
+// 注册 web services
 func RegisterHandlers() {
 	http.HandleFunc("/log", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
+		// 只处理 post
 		case http.MethodPost:
 			msg, err := ioutil.ReadAll(r.Body)
 			if err != nil || len(msg) == 0 {

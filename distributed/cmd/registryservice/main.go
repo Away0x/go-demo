@@ -8,6 +8,7 @@ import (
 	"net/http"
 )
 
+// 服务注册服务
 func main() {
 	registry.SetupRegistryService()
 	http.Handle("/services", &registry.RegistryService{})
@@ -27,10 +28,13 @@ func main() {
 		fmt.Println("Registry service started. Press any key to stop.")
 		var s string
 		fmt.Scanln(&s)
-		srv.Shutdown(ctx)
+		err := srv.Shutdown(ctx)
+		if err != nil {
+			log.Println(err)
+		}
 		cancel()
 	}()
 
-	<- ctx.Done()
+	<-ctx.Done()
 	fmt.Println("Shutting down registry service")
 }

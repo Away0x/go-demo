@@ -11,15 +11,18 @@ import (
 	"sync"
 )
 
+// 发送请求给服务注册 service, 注册服务
 func RegisterService(r Registration) error {
 	heartbeatURL, err := url.Parse(r.HeartbeatURL)
 	if err != nil {
 		return err
 	}
-	http.HandleFunc(heartbeatURL.Path, func (w http.ResponseWriter, r *http.Request)  {
+	// 心跳检测
+	http.HandleFunc(heartbeatURL.Path, func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 	})
 
+	// 接收注册中心的消息
 	serviceUpdateURL, err := url.Parse(r.ServiceUpdateURL)
 	if err != nil {
 		return err
@@ -65,6 +68,7 @@ func (suh serviceUpdateHanlder) ServeHTTP(w http.ResponseWriter, r *http.Request
 	prov.Update(p)
 }
 
+// 取消注册服务
 func ShutdownService(url string) error {
 	req, err := http.NewRequest(http.MethodDelete, ServicesURL,
 		bytes.NewBuffer([]byte(url)))
@@ -83,6 +87,7 @@ func ShutdownService(url string) error {
 	return nil
 }
 
+// 服务发现
 type providers struct {
 	services map[ServiceName][]string
 	mutex    *sync.RWMutex
