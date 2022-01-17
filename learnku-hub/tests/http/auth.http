@@ -1,0 +1,58 @@
+### command + option + e 切换环境
+
+### 检测手机号是否被注册
+POST {{host}}/v1/auth/signup/phone/exist
+
+{
+    "phone": "{{phone}}"
+}
+
+### 检测邮箱是否已注册
+POST {{host}}/v1/auth/signup/email/exist
+
+{
+    "email": "{{email}}"
+}
+
+### 发送图片验证码
+POST {{host}}/v1/auth/verify-codes/captcha
+
+### 发送手机验证码 (先需要经过图片验证码)
+POST {{host}}/v1/auth/verify-codes/phone
+
+{
+    "phone":"15121030641",
+    "captcha_id": "DvKMyeobyrJgzZ7oDMRX",
+    "captcha_answer": "999033"
+}
+
+### 发送 Email 验证码
+POST {{host}}/v1/auth/verify-codes/email
+
+{
+    "email":"tong.wu@rocketg.com",
+    "captcha_id": "DvKMyeobyrJgzZ7oDMRX",
+    "captcha_answer": "999033"
+}
+
+### 使用手机和验证码进行注册 (000开头的手机号会跳过验证码验证)
+POST {{host}}/v1/auth/signup/using-phone
+
+{
+    "name":"wutong",
+    "password":"secret",
+    "password_confirm":"secret",
+    "verify_code": "123456",
+    "phone": "00011059149"
+}
+
+### 使用邮箱和验证码进行注册 (testing 的邮箱会跳过验证码验证)
+POST {{host}}/v1/auth/signup/using-email
+
+{
+    "name":"wutong",
+    "password":"secret",
+    "password_confirm":"secret",
+    "verify_code": "123123",
+    "email": "tong.wu@testing.com"
+}

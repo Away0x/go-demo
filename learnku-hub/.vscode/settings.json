@@ -1,0 +1,14 @@
+{
+    "rest-client.defaultHeaders": {
+        "User-Agent": "vscode-restclient",
+        "Content-type": "application/json"
+    },
+    "rest-client.environmentVariables": {
+        "$shared": {},
+        "local": {
+            "host": "http://localhost:3000",
+            "phone": "15121030641",
+            "email": "tong.wu@rocketg.com"
+        }
+    }
+}

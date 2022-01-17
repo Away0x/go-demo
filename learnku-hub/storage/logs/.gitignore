@@ -1,0 +1,3 @@
+# 除了 .gitignore 文件以外， storage/logs 目录下的所有文件都排除在版本控制器以外
+*
+!.gitignore
