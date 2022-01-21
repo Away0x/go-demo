@@ -1,0 +1,3 @@
+- http 文件中可以使用 command + option + e 切换环境
+- 000 开头的手机号会跳过验证码验证
+- xx@testing.com 的邮箱会跳过验证码验证

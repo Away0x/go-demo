@@ -1,14 +1,16 @@
 {
     "rest-client.defaultHeaders": {
         "User-Agent": "vscode-restclient",
-        "Content-type": "application/json"
+        "Content-type": "application/json",
     },
     "rest-client.environmentVariables": {
         "$shared": {},
         "local": {
             "host": "http://localhost:3000",
-            "phone": "15121030641",
-            "email": "tong.wu@rocketg.com"
+            "phone": "00021030641",
+            "email": "tong.wu@testing.com",
+            "password": "secret",
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNyIsInVzZXJfbmFtZSI6Ind1dG9uZyIsImV4cGlyZV90aW1lIjoxNjQ3OTU2OTQzLCJleHAiOjE2NDc5NTY5NDMsImlhdCI6MTY0Mjc3Mjk0MywiaXNzIjoiR29odWIiLCJuYmYiOjE2NDI3NzI5NDN9.1gbiscMP97IKC6AJbZEQlcOBp9mTctDB8ICMGnlcg1s"
         }
     }
 }

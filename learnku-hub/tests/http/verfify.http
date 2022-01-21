@@ -1,0 +1,20 @@
+### 发送图片验证码
+POST {{host}}/v1/auth/verify-codes/captcha
+
+### 发送手机验证码 (先需要经过图片验证码)
+POST {{host}}/v1/auth/verify-codes/phone
+
+{
+    "phone":"15121030641",
+    "captcha_id": "DvKMyeobyrJgzZ7oDMRX",
+    "captcha_answer": "999033"
+}
+
+### 发送 Email 验证码
+POST {{host}}/v1/auth/verify-codes/email
+
+{
+    "email":"tong.wu@rocketg.com",
+    "captcha_id": "DvKMyeobyrJgzZ7oDMRX",
+    "captcha_answer": "999033"
+}

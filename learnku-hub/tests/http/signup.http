@@ -1,0 +1,36 @@
+### 检测手机号是否被注册
+POST {{host}}/v1/auth/signup/phone/exist
+
+{
+    "phone": "{{phone}}"
+}
+
+### 检测邮箱是否已注册
+POST {{host}}/v1/auth/signup/email/exist
+
+{
+    "email": "{{email}}"
+}
+
+
+### 使用手机和验证码进行注册 (000开头的手机号会跳过验证码验证)
+POST {{host}}/v1/auth/signup/using-phone
+
+{
+    "name": "wutong",
+    "password": "{{password}}",
+    "password_confirm": "{{password}}",
+    "verify_code": "123456",
+    "phone": "00011059149"
+}
+
+### 使用邮箱和验证码进行注册 (testing 的邮箱会跳过验证码验证)
+POST {{host}}/v1/auth/signup/using-email
+
+{
+    "name":"wutong",
+    "password": "{{password}}",
+    "password_confirm": "{{password}}",
+    "verify_code": "123123",
+    "email": "{{email}}"
+}
