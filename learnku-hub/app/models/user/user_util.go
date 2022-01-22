@@ -4,11 +4,6 @@ import (
 	"gohub/pkg/database"
 )
 
-func (userModel *User) Save() (rowsAffected int64) {
-	result := database.DB.Save(&userModel)
-	return result.RowsAffected
-}
-
 // IsEmailExist 判断 Email 已被注册
 func IsEmailExist(email string) bool {
 	var count int64

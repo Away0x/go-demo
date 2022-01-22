@@ -45,7 +45,6 @@ func InitLogger(filename string, maxSize, maxBackup, maxAge int, compress bool, 
 
 // getEncoder 设置日志存储格式
 func getEncoder() zapcore.Encoder {
-
 	// 日志格式规则
 	encoderConfig := zapcore.EncoderConfig{
 		TimeKey:        "time",
