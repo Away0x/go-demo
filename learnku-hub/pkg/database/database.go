@@ -80,3 +80,12 @@ func deleteMysqlDatabase() error {
 	}
 	return nil
 }
+
+func TableName(obj interface{}) string {
+	stmt := &gorm.Statement{DB: DB}
+	err := stmt.Parse(obj)
+	if err != nil {
+		panic(err)
+	}
+	return stmt.Schema.Table
+}

@@ -7,10 +7,11 @@
         "$shared": {},
         "local": {
             "host": "http://localhost:3000",
+            "version": "v1",
             "phone": "00021030641",
             "email": "tong.wu@testing.com",
             "password": "secret",
-            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNyIsInVzZXJfbmFtZSI6Ind1dG9uZyIsImV4cGlyZV90aW1lIjoxNjQ3OTU2OTQzLCJleHAiOjE2NDc5NTY5NDMsImlhdCI6MTY0Mjc3Mjk0MywiaXNzIjoiR29odWIiLCJuYmYiOjE2NDI3NzI5NDN9.1gbiscMP97IKC6AJbZEQlcOBp9mTctDB8ICMGnlcg1s"
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMSIsInVzZXJfbmFtZSI6Ind1dG9uZyIsImV4cGlyZV90aW1lIjoxNjQ4MTc3MTE2LCJleHAiOjE2NDgxNzcxMTYsImlhdCI6MTY0Mjk5MzExNiwiaXNzIjoiR29odWIiLCJuYmYiOjE2NDI5OTMxMTZ9.bNYnagHf_uvXzFJWCkvNMRnMMoad1F_TLUUJWJFuDYQ"
         }
     }
 }

@@ -11,3 +11,4 @@ GO111MODULE=on go install github.com/mailhog/MailHog@latest
 - strcase: 处理大小写
 - lumberjack: 一套滚动日志的实现方案，帮助我们管理日志文件
 - ansi: 设置终端输出颜色
+- faker: 生成假数据

@@ -1,0 +1,9 @@
+### 获取当前用户
+GET {{host}}/{{version}}/user
+Authorization: Bearer {{token}}
+
+### 所有用户
+GET {{host}}/{{version}}/users
+
+### 所有用户 (分页)
+GET {{host}}/{{version}}/users?page=2&sort=id&order=asc&per_page=2

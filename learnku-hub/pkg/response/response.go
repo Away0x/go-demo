@@ -3,6 +3,7 @@ package response
 
 import (
 	"gohub/pkg/logger"
+	"gohub/pkg/paginator"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -29,6 +30,15 @@ func Data(c *gin.Context, data interface{}) {
 	JSON(c, gin.H{
 		"success": true,
 		"data":    data,
+	})
+}
+
+// Page 响应分页数据
+func Page(c *gin.Context, pager paginator.Paging, data interface{}) {
+	JSON(c, gin.H{
+		"success": true,
+		"data":    data,
+		"pager":   pager,
 	})
 }
 

@@ -1,8 +1,8 @@
 ### 发送图片验证码
-POST {{host}}/v1/auth/verify-codes/captcha
+POST {{host}}/{{version}}/auth/verify-codes/captcha
 
 ### 发送手机验证码 (先需要经过图片验证码)
-POST {{host}}/v1/auth/verify-codes/phone
+POST {{host}}/{{version}}/auth/verify-codes/phone
 
 {
     "phone":"15121030641",
@@ -11,7 +11,7 @@ POST {{host}}/v1/auth/verify-codes/phone
 }
 
 ### 发送 Email 验证码
-POST {{host}}/v1/auth/verify-codes/email
+POST {{host}}/{{version}}/auth/verify-codes/email
 
 {
     "email":"tong.wu@rocketg.com",

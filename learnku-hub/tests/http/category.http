@@ -1,0 +1,24 @@
+### 创建 category
+POST {{host}}/{{version}}/categories
+Authorization: Bearer {{token}}
+
+{
+    "name": "cat",
+    "description": "desc"
+}
+
+### 更新 category
+PUT {{host}}/{{version}}/categories/1
+Authorization: Bearer {{token}}
+
+{
+    "name": "cat_new",
+    "description": "desc_new"
+}
+
+### category 列表
+GET {{host}}/{{version}}/categories?page=1&per_page=2
+
+### 删除 category
+DELETE {{host}}/{{version}}/categories/1
+Authorization: Bearer {{token}}

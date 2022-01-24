@@ -7,7 +7,7 @@ import (
 )
 
 // migrationFunc 定义 up 和 down 回调方法的类型
-type migrationFunc func(gorm.Migrator, *sql.DB)
+type migrationFunc func(gorm.Migrator, *sql.DB) error
 
 // migrationFiles 所有的迁移文件数组
 var migrationFiles []MigrationFile

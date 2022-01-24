@@ -1,5 +1,5 @@
 ### 使用手机号，短信验证码进行登录
-POST {{host}}/v1/auth/login/using-phone
+POST {{host}}/{{version}}/auth/login/using-phone
 
 {
     "phone": "{{phone}}",
@@ -7,7 +7,7 @@ POST {{host}}/v1/auth/login/using-phone
 }
 
 ### 使用手机, Email, 用户名 和密码进行登录
-POST {{host}}/v1/auth/login/using-password
+POST {{host}}/{{version}}/auth/login/using-password
 
 {
     "login_id": "{{email}}",
@@ -17,5 +17,5 @@ POST {{host}}/v1/auth/login/using-password
 }
 
 ### Refresh token
-POST {{host}}/v1/auth/login/refresh-token
+POST {{host}}/{{version}}/auth/login/refresh-token
 Authorization: Bearer {{token}}

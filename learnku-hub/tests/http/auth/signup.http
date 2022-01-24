@@ -14,7 +14,7 @@ POST {{host}}/v1/auth/signup/email/exist
 
 
 ### 使用手机和验证码进行注册 (000开头的手机号会跳过验证码验证)
-POST {{host}}/v1/auth/signup/using-phone
+POST {{host}}/{{version}}/auth/signup/using-phone
 
 {
     "name": "wutong",
@@ -25,7 +25,7 @@ POST {{host}}/v1/auth/signup/using-phone
 }
 
 ### 使用邮箱和验证码进行注册 (testing 的邮箱会跳过验证码验证)
-POST {{host}}/v1/auth/signup/using-email
+POST {{host}}/{{version}}/auth/signup/using-email
 
 {
     "name":"wutong",

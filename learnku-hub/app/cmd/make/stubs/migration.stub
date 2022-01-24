@@ -20,12 +20,14 @@ func init() {
         models.CommonTimestampsField
     }
 
-    up := func(migrator gorm.Migrator, DB *sql.DB) {
-        migrator.AutoMigrate(&User{})
+    up := func(migrator gorm.Migrator, DB *sql.DB) error {
+        err := migrator.AutoMigrate(&User{})
+        return err
     }
 
-    down := func(migrator gorm.Migrator, DB *sql.DB) {
-        migrator.DropTable(&User{})
+    down := func(migrator gorm.Migrator, DB *sql.DB) error {
+        err := migrator.DropTable(&User{})
+        return err
     }
 
     migrate.Add("{{FileName}}", up, down)

@@ -21,7 +21,8 @@ type Migrator struct {
 type Migration struct {
 	ID        uint64 `gorm:"primaryKey;autoIncrement;"`
 	Migration string `gorm:"type:varchar(255);not null;unique;"`
-	Batch     int
+	// 批次: 每一个相同的批次里，记录了每次运行 migrate up 命令执行的所有文件，每运行一次，批次就会加一
+	Batch int
 }
 
 // NewMigrator 创建 Migrator 实例，用以执行迁移操作
@@ -146,7 +147,8 @@ func (migrator *Migrator) rollbackMigrations(migrations []Migration) bool {
 		// 执行迁移文件的 down 方法
 		mfile := getMigrationFile(_migration.Migration)
 		if mfile.Down != nil {
-			mfile.Down(database.DB.Migrator(), database.SQLDB)
+			err := mfile.Down(database.DB.Migrator(), database.SQLDB)
+			console.ExitIf(err)
 		}
 
 		runed = true
@@ -208,7 +210,8 @@ func (migrator *Migrator) runUpMigration(mfile MigrationFile, batch int) {
 		// 友好提示
 		console.Warning("migrating " + mfile.FileName)
 		// 执行 up 方法
-		mfile.Up(database.DB.Migrator(), database.SQLDB)
+		err := mfile.Up(database.DB.Migrator(), database.SQLDB)
+		console.ExitIf(err)
 		// 提示已迁移了哪个文件
 		console.Success("migrated " + mfile.FileName)
 	}
