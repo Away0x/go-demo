@@ -28,5 +28,5 @@ func init() {
 		return err
 	}
 
-	migrate.Add("2022_01_24_123712_add_categories_table", up, down)
+	migrate.Add("2022_01_24_135253_category", up, down)
 }

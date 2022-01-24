@@ -1,0 +1,29 @@
+### topic 列表
+GET {{host}}/{{version}}/topics?page=1&per_page=2
+
+### 单个 topic
+GET {{host}}/{{version}}/topics/1
+
+### 创建 topic
+POST {{host}}/{{version}}/topics
+Authorization: Bearer {{token}}
+
+{
+    "title": "topic",
+    "body": "帖子描述帖子描述帖子描述",
+    "category_id": "2"
+}
+
+### 更新 topic
+PUT {{host}}/{{version}}/topics/1
+Authorization: Bearer {{token}}
+
+{
+    "title": "topic_new",
+    "body": "帖子描述帖子描述帖子描述",
+    "category_id": "2"
+}
+
+### 删除 topic
+DELETE {{host}}/{{version}}/topics/1
+Authorization: Bearer {{token}}

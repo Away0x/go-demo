@@ -30,5 +30,5 @@ func init() {
 		return err
 	}
 
-	migrate.Add("2022_01_24_112128_user", up, down)
+	migrate.Add("2022_01_24_135228_user", up, down)
 }
