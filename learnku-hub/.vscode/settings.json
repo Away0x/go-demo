@@ -6,7 +6,7 @@
     "rest-client.environmentVariables": {
         "$shared": {},
         "local": {
-            "host": "http://localhost:3000",
+            "host": "http://localhost:3000/api",
             "version": "v1",
             "phone": "00021030641",
             "email": "tong.wu@testing.com",

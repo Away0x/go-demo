@@ -14,6 +14,8 @@ func init() {
 			"debug": config.Env("APP_DEBUG", false),
 			// 应用服务端口
 			"port": config.Env("APP_PORT", "3000"),
+			// API 域名，未设置的话所有 API URL 加 api 前缀，如 http://domain.com/api/v1/users
+			"api_domain": config.Env("API_DOMAIN"),
 			// 加密会话、JWT 加密
 			"key": config.Env("APP_KEY", "33446a9dcf9ea060a0a6532b166da32f304af0de"),
 			// 用以生成链接
