@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-    type {{StructName}} struct {
+    type FIXME struct {
         models.BaseModel
 
         // Put fields in here
@@ -18,12 +18,12 @@ func init() {
     }
 
     up := func(migrator gorm.Migrator, DB *sql.DB) error {
-        err := migrator.AutoMigrate(&{{StructName}}{})
+        err := migrator.AutoMigrate(&FIXME{})
         return err
     }
 
     down := func(migrator gorm.Migrator, DB *sql.DB) error {
-        err := migrator.DropTable(&{{StructName}}{})
+        err := migrator.DropTable(&FIXME{})
         return err
     }
 

@@ -11,6 +11,8 @@ import (
 
 // RegisterAPIRoutes 注册网页相关路由
 func RegisterAPIRoutes(r *gin.Engine) {
+	r.Static("/public", "public")
+
 	// 测试一个 v1 的路由组，我们所有的 v1 版本的路由都将存放到这里
 	v1 := r.Group("/v1")
 
@@ -68,6 +70,11 @@ func RegisterAPIRoutes(r *gin.Engine) {
 	usersGroup := v1.Group("/users")
 	{
 		usersGroup.GET("", uc.Index)
+		usersGroup.PUT("", middlewares.AuthJWT(), uc.UpdateProfile)
+		usersGroup.PUT("/email", middlewares.AuthJWT(), uc.UpdateEmail)
+		usersGroup.PUT("/phone", middlewares.AuthJWT(), uc.UpdatePhone)
+		usersGroup.PUT("/password", middlewares.AuthJWT(), uc.UpdatePassword)
+		usersGroup.PUT("/avatar", middlewares.AuthJWT(), uc.UpdateAvatar)
 	}
 
 	cgc := new(controllers.CategoriesController)
@@ -87,5 +94,11 @@ func RegisterAPIRoutes(r *gin.Engine) {
 		tpcGroup.POST("", middlewares.AuthJWT(), tpc.Store)
 		tpcGroup.PUT("/:id", middlewares.AuthJWT(), tpc.Update)
 		tpcGroup.DELETE("/:id", middlewares.AuthJWT(), tpc.Delete)
+	}
+
+	lsc := new(controllers.LinksController)
+	linksGroup := v1.Group("/links")
+	{
+		linksGroup.GET("", lsc.Index)
 	}
 }

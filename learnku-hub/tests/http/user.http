@@ -7,3 +7,53 @@ GET {{host}}/{{version}}/users
 
 ### 所有用户 (分页)
 GET {{host}}/{{version}}/users?page=2&sort=id&order=asc&per_page=2
+
+### 修改当前用户
+PUT {{host}}/{{version}}/users
+Authorization: Bearer {{token}}
+
+{
+    "name": "wutong",
+    "indtroduction": "adsc",
+    "city": "上海"
+}
+
+### 修改当前用户邮箱
+PUT {{host}}/{{version}}/users/email
+Authorization: Bearer {{token}}
+
+{
+    "email": "{{email}}",
+    "verify_code": "123456"
+}
+
+### 修改当前用户手机号
+PUT {{host}}/{{version}}/users/phone
+Authorization: Bearer {{token}}
+
+{
+    "phone": "{{phone}}",
+    "verify_code": "123456"
+}
+
+### 修改当前用户密码
+PUT {{host}}/{{version}}/users/password
+Authorization: Bearer {{token}}
+
+{
+    "password": "secret",
+    "new_password": "newpassword",
+    "new_password_confirm": "newpassword"
+}
+
+### 修改当前用户头像
+PUT {{host}}/{{version}}/users/avatar
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="avatar"; filename="avatar.jpeg"
+Content-Type: image/jpeg
+
+< ./avatar.jpeg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--

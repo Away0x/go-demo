@@ -1,0 +1,2 @@
+### link 列表
+GET {{host}}/{{version}}/links
